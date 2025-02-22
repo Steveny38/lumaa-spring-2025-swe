@@ -3,7 +3,6 @@ function authTokenMiddleware(req, res, next){
 
     const authHeader = req.headers['authorization']
 
-    console.log(authHeader)
     const token = authHeader && authHeader.split(' ')[1]
     if(token == null){
         return res.sendStatus(401)
@@ -15,7 +14,6 @@ function authTokenMiddleware(req, res, next){
         req.id = user.id
         req.username = user.username
 
-        console.log("TESTING MIDDLE", user, user.id, req.id)
         next()
     })
 

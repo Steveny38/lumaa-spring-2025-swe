@@ -1,5 +1,5 @@
 const express = require('express')
-require('cors')
+const cors = require('cors')
 require('dotenv').config()
 const authRouter = require('./routers/authRouter')
 const taskRouter = require('./routers/taskRouter')
@@ -9,6 +9,7 @@ app.listen(process.env.PORT , (req, res) => {
     console.log(`Listening on Port ${process.env.PORT}`)
 })
 
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(express.json())
 
 app.use("/auth", authRouter)

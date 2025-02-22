@@ -3,7 +3,6 @@ const authModel = require("../models/authModel")
 
 async function register(req, res) {
     try {
-        console.log(req.body)
         const {username , password} = req.body
 
         if (!username || !password) {
@@ -16,12 +15,14 @@ async function register(req, res) {
         
         return res.json({
             message: register.message,
-            token: register.token
+            token: register.token,
+            success: true
         })
         
     } catch (error) {
         return res.json({
-            message: "Username already in use"
+            message: "Username already in use",
+            success: false
         })
     }
 }
@@ -38,12 +39,14 @@ async function login(req, res) {
 
         return res.json({
             message: login.message,
-            token: login.token
+            token: login.token,
+            success: true
         })
 
     } catch (error) {
         return res.json({
-            message: error.message
+            message: error.message,
+            success: false
         })
     }
 }

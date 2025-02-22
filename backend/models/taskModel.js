@@ -3,7 +3,7 @@ const pool = require('../database')
 async function getTasks(id){
     try {
         const tasks = await pool.query('SELECT * FROM Tasks WHERE userID = $1', [id])
-        console.log(tasks)
+      
         return {
             tasks: tasks.rows
         }
@@ -13,9 +13,9 @@ async function getTasks(id){
     }
 }
 
-async function createTask(id, title, description = ""){
+async function createTask(id, title, description){
     try {
-        description.length > 0 ? await pool.query('INSERT INTO Tasks (title, userID) VALUES ($1, $2)', [title, id]): await pool.query('INSERT INTO Tasks (title, description, userID) VALUES ($1, $2, $3', [title, description, id])
+        description.length > 0 ? await pool.query('INSERT INTO Tasks (title,description, userID) VALUES ($1, $2, $3)', [title,description, id]): await pool.query('INSERT INTO Tasks (title, userID) VALUES ($1, $2)', [title, id])
 
         const updatedTasks = await getTasks(id)
         return {

@@ -5,11 +5,12 @@ async function getUserTasks(req, res){
         const tasks = await taskModel.getTasks(req.id)
 
         return res.json({
-            tasks: tasks
+            tasks: tasks,
+            success: true
         })
     } catch (error) {
         console.error(error)
-        res.json({message: "Error getting tasks"})
+        res.json({message: "Error getting tasks", success: false})
     }
 }
 
@@ -17,17 +18,20 @@ async function createUserTask(req, res) {
     try {
         const {title, description} = req.body
 
+        console.log("title desc:", title, description)
         console.log("TESTING ID TITLE DES", req.id, title, description)
         const createTaskResult = await taskModel.createTask(req.id, title, description)
 
         return res.json({
             message: createTaskResult.message,
-            tasks: createTaskResult.tasks
+            tasks: createTaskResult.tasks,
+            success: true
         })
 
     } catch (error) {
         return res.json({
-            message: error.message
+            message: error.message,
+            success: false
         })
     }
 }
@@ -35,16 +39,18 @@ async function createUserTask(req, res) {
 async function updateUserTask(req,res){
     try {
         const {id} = req.params
-        const {title, description, isCompleted} = req.body
-        const updateTaskResult = await taskModel.updateTask(id, title, description, isCompleted, req.id)
+        const {title, description, iscomplete} = req.body
+        const updateTaskResult = await taskModel.updateTask(id, title, description, iscomplete, req.id)
 
         return res.json({
             message: updateTaskResult.message,
-            tasks: updateTaskResult.tasks
+            tasks: updateTaskResult.tasks,
+            success: true
         })
     } catch (error) {
         return res.json({
-            message: error.message
+            message: error.message,
+            success: false
         })
     }
 }
@@ -56,12 +62,14 @@ async function deleteTask( req, res) {
 
         return res.json({
             message: deleteTaskResult.message,
-            tasks: deleteTaskResult.tasks
+            tasks: deleteTaskResult.tasks,
+            success: true
         })
 
     } catch (error) {
         return res.json({
-            message: error.message
+            message: error.message,
+            success: false
         })
     }
 }

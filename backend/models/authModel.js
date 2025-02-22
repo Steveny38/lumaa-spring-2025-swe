@@ -16,7 +16,7 @@ async function register(username, password){
 
         const newUser = await pool.query('SELECT * FROM Users WHERE username = $1', [username])
 
-        console.log(newUser)
+    
 
         const token = jwt.sign({id: newUser.rows[0].id, username: newUser.rows[0].username}, process.env.JWT_SECRET, {expiresIn: '1hr'})
         return {
